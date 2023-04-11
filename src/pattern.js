@@ -1,43 +1,29 @@
 
-const testLog = [];
-
-const getTestLog = function () {
-  return testLog;
+function style (text, colorCode) {
+  return "\033[" + colorCode + "m" + text + "\033[0m";
 }
 
-const updateTestLog = function(status, actual, expected, message, functionName) {
-  testLog.push(
-    {
-      expected, actual, message, status, message, functionName
-    }
-  );
+function green(text) {
+  return style(text, "32");  
 }
 
-const generateSummary = function () {
-  let totalCases = 0;
-  let passedCases = 0;
-
-  for (let entry of getTestLog()) {
-    passedCases += (entry.status === true) ? 1 : 0; 
-    totalCases += 1;
-  }
-
-  console.log();
-  console.log("Summary : " + passedCases + "/" + totalCases + " passed");
+function red(text) {
+  return style(text, "31"); 
 }
 
-const assertEquals = function (actual, expected, message, functionName) {
-  const  result = expected === actual;
+function yellow(text) {
+  return style(text, "33"); 
+}
 
-  updateTestLog(result, actual, expected, message, functionName);
+function underline(text) {
+  return  style(text, "4");
 }
 
 
-const assertAlmostEquals = function (actual, expected, message) {
-  result = Math.abs(expected - actual) < 0.1;
-
-  updateTestLog(result);
+function print (headline){
+  console.log(yellow((underline(headline))));
 }
+
 
 
 
@@ -52,6 +38,59 @@ const newline = "\n";
 const space = " ";
 const star = "*";
 const hyphen = "-";
+
+//------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+function areEqual(array1, array2) {
+  const length1 = array1.length;
+  const length2 = array2.length;
+
+  if (length1 !== length2) {
+    return false;
+  }
+
+  for(let index = 0 ; index < length1 ; index++) {
+    if(array1[index] !== array2[index]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function assertArraysEqual (programOutput, expectedOutput, testTitle) {
+  const newline = "\n";
+  const expectedVsActual = newline + " Expected : " + green(expectedOutput) + newline + "  Actual : " + red(programOutput);
+  const failedInfo = "❌ " + testTitle + expectedVsActual;  
+  const passedInfo = "✅ " + testTitle;
+
+  const result = areEqual(expectedOutput, programOutput) ? passedInfo : failedInfo;
+  console.log(result); 
+}
+
+function assertEquals (programOutput, expectedOutput, testTitle) {
+  const newline = "\n";
+  const expectedVsActual = newline + " Expected : \n" + green(expectedOutput) + newline + "  Actual : \n" + red(programOutput);
+  const failedInfo = "❌ " + testTitle + expectedVsActual;  
+  const passedInfo = "✅ " + testTitle;
+
+  const result = (expectedOutput === programOutput) ? passedInfo : failedInfo;
+  console.log(result); 
+}
+
+
+
+
+
+
+
+
+
 
 
 //------------------------------------------------ Rectangle ---------------------------------------------------
@@ -260,5 +299,3 @@ testGenerateDiamond();
 
 
 //---------------------------------------------------------------------------------------------------------------------------------
-console.table(testLog);
-generateSummary();
