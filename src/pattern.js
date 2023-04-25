@@ -1,4 +1,5 @@
 
+
 function style (text, colorCode) {
   return "\033[" + colorCode + "m" + text + "\033[0m";
 }
@@ -107,14 +108,15 @@ const generateRectangle = function (row, col) {
   return rectangle;
 }
 
-
+/*
 const testGenerateRectangle = function () {
   assertEquals(generateRectangle(0,0), "", "Zero by zero", "generateRectangle()");
   assertEquals(generateRectangle(1,2), "**\n", "Single row", "generateRectangle()");
   assertEquals(generateRectangle(2,3), "***\n***\n", "Multiple rows", "generateRectangle()");
 }
+ */
 
-testGenerateRectangle();
+patternTests.testGenerateRectangle;
 
 
 //------------------------------------ Alternate Rectangle --------------------------
